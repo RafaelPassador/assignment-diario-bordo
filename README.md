@@ -1,6 +1,6 @@
 # 🚛 InfoTransportes Pipeline
 
-Pipeline de ingestão, transformação e agregação de dados de transportes usando PySpark, Delta Lake e Docker.
+Pipeline de ingestão, transformação e agregação de dados de transportes usando PySpark e Docker.
 
 ## 📂 Organização
 
@@ -81,7 +81,7 @@ Esse notebook irá:
 
 Os testes são executados automaticamente com `pytest`:
 
-- Leitura e escrita Delta
+- Leitura e escrita
 - Falhas simuladas
 - Transformações Silver e Gold
 

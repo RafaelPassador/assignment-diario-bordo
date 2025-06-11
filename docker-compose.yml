@@ -1,12 +1,16 @@
-version: "3.9"
-
 services:
   spark-job:
     build:
       context: .
       dockerfile: Dockerfile
+    container_name: spark_test_container
     volumes:
       - /c/Users/Usuario/Documents/GitHub/assignment-diario-bordo/data:/app/data
-    command: spark-submit src/main.py
+    entrypoint: []
+    command:
+      - spark-submit
+      - --packages
+      - io.delta:delta-core_2.12:2.3.0
+      - src/main.py
     environment:
       - PYTHONPATH=/app
