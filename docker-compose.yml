@@ -3,16 +3,18 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: spark_test_container      
+    container_name: spark_test_container        
     volumes:
       - ./data:/app/data
       - ./src:/app/src
+      - ./tests:/app/tests
       - ./spark-warehouse:/app/spark-warehouse
       - ./derby:/app/derby
-    entrypoint: []    
+    entrypoint: []
     command:
-      - /bin/sh
-      - -c
-      - "spark-submit --packages io.delta:delta-core_2.12:2.3.0 src/main.py && pytest tests/test_data_processor.py -v"
+      - spark-submit
+      - --packages
+      - io.delta:delta-core_2.12:2.3.0
+      - src/main.py
     environment:
       - PYTHONPATH=/app

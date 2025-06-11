@@ -87,3 +87,22 @@ class DataWriter:
             return "1=1" 
         
         return " AND ".join(conditions)
+
+    def write_parquet(self, df, path, mode="overwrite"):
+        """
+        Writes data to a Parquet file.
+
+        Args:
+            df (DataFrame): Spark DataFrame to be written.
+            path (str): Path to the Parquet file.
+            mode (str): Write mode (default is "overwrite").
+        """
+        logging.info(f"Writing data to Parquet file: {path} (mode={mode})")
+        
+        os.makedirs(os.path.dirname(path), exist_ok=True)
+        
+        df.write \
+            .mode(mode) \
+            .parquet(path)
+            
+        logging.info(f"Parquet file written successfully to {path}")
