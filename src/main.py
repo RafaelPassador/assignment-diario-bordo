@@ -11,7 +11,6 @@ sys.path.append('/app/src')
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 
 def main():
-    try:
         # Configuração do SparkSession
         builder = (
             SparkSession.builder
@@ -66,15 +65,7 @@ def main():
             spark.sql(f"SELECT * FROM {table} LIMIT 5").show()
 
         logging.info("Pipeline finalizado com sucesso.")
-        # Remover spark.stop() para manter o container ativo
-        # spark.stop()
-        logging.info("Container ativo. Pressione Ctrl+C para encerrar.")
-        import time
-        while True:
-            time.sleep(1)  # Mantém o processo vivo
-    except Exception as e:
-        logging.critical(f"Falha crítica na execução da pipeline: {e}")
-        raise
+        spark.stop()
 
 if __name__ == "__main__":
     main()

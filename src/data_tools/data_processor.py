@@ -90,7 +90,7 @@ class DataProcessor:
             df = self.reader.read_delta(SILVER_PATH, table_name=source_table)
             grouped = df.groupBy("DT_REFE").agg(
                 count("*").alias("QT_CORR"),
-                count(when(col("CATEGORIA") == "negócio", True)).alias("QT_CORR_NEG"),
+                count(when(col("CATEGORIA") == "negocio", True)).alias("QT_CORR_NEG"),
                 count(when(col("CATEGORIA") == "pessoal", True)).alias("QT_CORR_PESS"),
                 max(col("DISTANCIA")).alias("VL_MAX_DIST"),
                 min(col("DISTANCIA")).alias("VL_MIN_DIST"),
