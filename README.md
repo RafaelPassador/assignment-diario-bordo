@@ -69,6 +69,10 @@ Execute localmente:
 
 ```bash
 jupyter notebook src/notebooks/explore_tables.ipynb
+
+ou
+
+docker-compose run --rm -p 8888:8888 spark-job jupyter notebook --ip 0.0.0.0 --allow-root --no-browser /app/src/notebooks    
 ```
 
 Esse notebook irá:

@@ -66,7 +66,12 @@ def main():
             spark.sql(f"SELECT * FROM {table} LIMIT 5").show()
 
         logging.info("Pipeline finalizado com sucesso.")
-        spark.stop()
+        # Remover spark.stop() para manter o container ativo
+        # spark.stop()
+        logging.info("Container ativo. Pressione Ctrl+C para encerrar.")
+        import time
+        while True:
+            time.sleep(1)  # Mantém o processo vivo
     except Exception as e:
         logging.critical(f"Falha crítica na execução da pipeline: {e}")
         raise
