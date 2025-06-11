@@ -3,13 +3,12 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: spark_test_container
+    container_name: spark_test_container      
     volumes:
-      # Ajustar paths para serem relativos ao container
       - ./data:/app/data
       - ./src:/app/src
-      # Mapear o warehouse do Spark para um diretório persistente
       - ./spark-warehouse:/app/spark-warehouse
+      - ./derby:/app/derby
     entrypoint: []
     command:
       - spark-submit

@@ -1,6 +1,7 @@
 # Dados
 data/
 warehouse/
+derby/
 
 # Python
 __pycache__/

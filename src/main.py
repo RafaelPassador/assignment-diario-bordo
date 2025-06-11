@@ -23,6 +23,11 @@ def main():
             .config("spark.sql.legacy.setCommandRejectsSparkCoreConfs", "false")
             .config("spark.sql.sources.default", "delta")
             .config("spark.sql.session.timeZone", "UTC")
+            # Configure persistent Hive metastore location with system directory
+            .config("javax.jdo.option.ConnectionURL", "jdbc:derby:/app/derby/metastore_db;create=true")
+            .config("javax.jdo.option.ConnectionDriverName", "org.apache.derby.jdbc.EmbeddedDriver")
+            .config("javax.jdo.option.ConnectionUserName", "APP")
+            .config("javax.jdo.option.ConnectionPassword", "mine")
             .enableHiveSupport()
         )
 
