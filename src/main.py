@@ -19,7 +19,7 @@ def main():
             .config("spark.sql.extensions", "io.delta.sql.DeltaSparkSessionExtension")
             .config("spark.sql.catalog.spark_catalog", "org.apache.spark.sql.delta.catalog.DeltaCatalog")
             .config("spark.databricks.delta.retentionDurationCheck.enabled", "false")
-            .config("spark.sql.warehouse.dir", "spark-warehouse")
+            .config("spark.sql.warehouse.dir", "/app/spark-warehouse")
             .config("spark.sql.catalogImplementation", "hive")
             .config("spark.sql.legacy.setCommandRejectsSparkCoreConfs", "false")
             .config("spark.sql.sources.default", "delta")

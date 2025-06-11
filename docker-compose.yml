@@ -6,6 +6,7 @@ services:
     container_name: spark_test_container
     volumes:
       - /c/Users/Usuario/Documents/GitHub/assignment-diario-bordo/data:/app/data
+      - /c/Users/Usuario/Documents/GitHub/assignment-diario-bordo/src:/app/src
     entrypoint: []
     command:
       - spark-submit
