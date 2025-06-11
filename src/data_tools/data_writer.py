@@ -24,75 +24,66 @@ class DataWriter:
         """
         spark = df.sparkSession
         
-        # Garante que o diretório existe
         os.makedirs(os.path.dirname(path), exist_ok=True)
         
-        logging.info(f"Salvando dados como tabela '{table_name}' em {path} (modo={mode})")
+        logging.info(f"Saving data as table '{table_name}' in {path} (mode={mode})")
         
-        # Configura o writer base
+        # Configure base writer
         writer = df.write \
             .format("delta") \
             .mode(mode) \
             .option("path", path) \
             .option("mergeSchema", "true")
         
-        # Se tiver partições, configura para overwrite apenas as partições
         if partition_cols:
             writer = writer.partitionBy(*partition_cols)
             if mode == "overwrite":
-                # Apenas substitui os dados das partições que estão sendo escritas
+                # Only replace data in the partitions being written
                 writer = writer.option("replaceWhere", self._get_partition_filter(df, partition_cols))
         
         try:
-            # Salva os dados e cria/atualiza a tabela no catálogo
+            # Save data and create/update table in catalog
             writer.saveAsTable(table_name)
             
-            # Valida se há dados e mostra informações
-            logging.info(f"Tabela '{table_name}' atualizada com sucesso")
+            # Validate if there is data and show information
+            logging.info(f"Table '{table_name}' updated successfully")
             count = spark.sql(f"SELECT COUNT(*) as count FROM {table_name}").collect()[0]['count']
-            logging.info(f"Tabela '{table_name}' contém {count} registros")
+            logging.info(f"Table '{table_name}' contains {count} records")
         except Exception as e:
             logging.error(f"Erro ao salvar tabela '{table_name}': {e}")
             raise
 
     def _get_partition_filter(self, df, partition_cols):
         """
-        Cria a condição WHERE para substituir apenas as partições específicas.
+        Creates the WHERE condition to replace only specific partitions.
         
         Args:
-            df (DataFrame): DataFrame com os dados a serem escritos
-            partition_cols (list): Lista de colunas de particionamento
+            df (DataFrame): DataFrame with the data to be written
+            partition_cols (list): List of partitioning columns
             
         Returns:
-            str: Condição WHERE para filtrar as partições. 
-                 Exemplo: "(DT_REFE = '2016-01-01')"
+            str: WHERE condition to filter partitions.
+                 Example: "(DT_REFE = '2016-01-01')"
         """
         
         conditions = []
         
         for col in partition_cols:
-            # Obtém valores únicos da coluna
             distinct_values = [row[0] for row in df.select(col).distinct().collect()]
             
-            # Formata cada valor baseado em seu tipo
             formatted_values = []
             for value in distinct_values:
                 if isinstance(value, (date, str)):
-                    # Trata datas e strings com aspas simples
                     formatted_values.append(f"{col} = '{value}'")
                 elif value is None:
-                    # Ignora valores nulos
                     continue
                 else:
-                    # Para outros tipos (int, float, etc)
                     formatted_values.append(f"{col} = {value}")
             
             if formatted_values:
-                # Junta os valores com OR somente se houver valores válidos
                 conditions.append(f"({' OR '.join(formatted_values)})")
         
         if not conditions:
-            return "1=1"  # Condição sempre verdadeira se não houver filtros
-            
-        # Junta as condições de cada coluna com AND
+            return "1=1" 
+        
         return " AND ".join(conditions)

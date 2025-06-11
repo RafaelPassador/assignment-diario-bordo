@@ -9,11 +9,10 @@ services:
       - ./src:/app/src
       - ./spark-warehouse:/app/spark-warehouse
       - ./derby:/app/derby
-    entrypoint: []
+    entrypoint: []    
     command:
-      - spark-submit
-      - --packages
-      - io.delta:delta-core_2.12:2.3.0
-      - src/main.py
+      - /bin/sh
+      - -c
+      - "spark-submit --packages io.delta:delta-core_2.12:2.3.0 src/main.py && pytest tests/test_data_processor.py -v"
     environment:
       - PYTHONPATH=/app
