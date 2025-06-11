@@ -68,14 +68,15 @@ Ou usando o notebook.
 Execute localmente:
 
 ```bash
-jupyter notebook ValidacaoCamadas.ipynb
+jupyter notebook src/notebooks/explore_tables.ipynb
 ```
 
 Esse notebook irá:
 
 - Inicializar Spark
-- Ler dados da camada `silver` e `gold`
+- Ler dados das camadas `bronze`, `silver` e `gold`
 - Mostrar o schema e primeiras linhas
+- Explorar partições e realizar consultas personalizadas
 
 ## ✅ Testes automatizados
 
@@ -89,7 +90,13 @@ Para rodar localmente:
 
 ```bash
 pip install -r requirements.txt
-pytest
+pytest tests/ -v
+```
+
+Para rodar via Docker:
+
+```bash
+docker-compose run --rm spark-job python3 -m pytest tests/ -v
 ```
 
 ## ⚙️ CI com GitHub Actions
