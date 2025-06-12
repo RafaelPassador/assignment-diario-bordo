@@ -45,6 +45,16 @@ graph TD
     D -->|Consulta| E[Notebook]
 ```
 
+#### Arquitetura de Dados (Mermaid Graph)
+
+```mermaid
+graph LR
+    A[Input CSV] -->|Ingestão| B[Bronze Layer]
+    B -->|Transformação| C[Silver Layer]
+    C -->|Agregação| D[Gold Layer]
+    D -->|Consulta| E[Notebook]
+```
+
 ### Estrutura de Diretórios
 
 ```
