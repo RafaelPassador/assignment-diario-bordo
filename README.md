@@ -35,18 +35,6 @@ Uma equipe está elaborando um modelo para compreender como os clientes estão u
 
 Pipeline de ingestão, transformação e agregação de dados de transportes implementado com PySpark, Delta Lake e Docker. O projeto segue as melhores práticas de engenharia de dados com arquitetura em camadas (Bronze, Silver, Gold) e cobertura completa de testes unitários.
 
-## Arquitetura do Projeto
-
-```mermaid
-graph TD
-    A[Input CSV] -->|Ingestão| B[Bronze Layer]
-    B -->|Transformação| C[Silver Layer]
-    C -->|Agregação| D[Gold Layer]
-    D -->|Consulta| E[Notebook]
-```
-
-#### Arquitetura de Dados (Mermaid Graph)
-
 ```mermaid
 graph LR
     A[Input CSV] -->|Ingestão| B[Bronze Layer]
