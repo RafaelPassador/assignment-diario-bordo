@@ -37,6 +37,14 @@ Pipeline de ingestão, transformação e agregação de dados de transportes imp
 
 ## Arquitetura do Projeto
 
+```mermaid
+graph TD
+    A[Input CSV] -->|Ingestão| B[Bronze Layer]
+    B -->|Transformação| C[Silver Layer]
+    C -->|Agregação| D[Gold Layer]
+    D -->|Consulta| E[Notebook]
+```
+
 ### Estrutura de Diretórios
 
 ```
@@ -100,6 +108,7 @@ O pipeline implementa a arquitetura medallion com três camadas:
   - Contagem por categoria (negócio/pessoal)
   - Contagem por propósito (reunião/não-reunião)
   - Estatísticas de distância (min, max, média)
+
 
 ## Pré-requisitos
 
