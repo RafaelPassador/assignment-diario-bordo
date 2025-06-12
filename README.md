@@ -59,11 +59,7 @@ assignment-diario-bordo/
 │   ├── conftest.py              # Configurações e fixtures
 │   ├── test_data_reader.py      # Testes do DataReader
 │   ├── test_data_writer.py      # Testes do DataWriter
-│   ├── test_data_processor.py   # Testes do DataProcessor
 │   ├── test_transformations.py  # Testes das transformações
-│   ├── test_processors.py       # Testes dos processadores
-│   ├── test_exceptions.py       # Testes das exceções
-│   └── test_config.py           # Testes das configurações
 ├── data/                        # Dados persistidos localmente
 │   ├── input/                   # Dados de entrada (CSV)
 │   ├── bronze/                  # Camada Bronze (dados brutos)
@@ -175,20 +171,6 @@ docker-compose up -d
 2. **Executar todos os testes:**
 ```powershell
 docker exec -it spark_test_container bash -c "export PYTHONPATH=/app/src:/app:`$PYTHONPATH && cd /app && pytest tests/ -v"
-```
-
-3. **Executar testes específicos:**
-```powershell
-# Testes de um módulo específico
-docker exec -it spark_test_container bash -c "export PYTHONPATH=/app/src:/app:`$PYTHONPATH && cd /app && pytest tests/test_data_reader.py -v"
-
-# Teste específico
-docker exec -it spark_test_container bash -c "export PYTHONPATH=/app/src:/app:`$PYTHONPATH && cd /app && pytest tests/test_data_reader.py::TestDataReader::test_read_csv_success -v"
-```
-
-4. **Testes com cobertura:**
-```powershell
-docker exec -it spark_test_container bash -c "export PYTHONPATH=/app/src:/app:`$PYTHONPATH && cd /app && pytest tests/ --cov=src --cov-report=term-missing -v"
 ```
 
 ## Exploração de Dados com Notebook
