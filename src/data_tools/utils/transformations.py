@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 from pyspark.sql import DataFrame
-from pyspark.sql.functions import to_date, col, lower
+from pyspark.sql.functions import to_date, col, lower, concat, substring, lit
 
 class ColumnTransformation(ABC):
     @abstractmethod
@@ -14,8 +14,17 @@ class DateTransformation(ColumnTransformation):
         self.date_format = date_format
 
     def apply(self, df: DataFrame) -> DataFrame:
-        return df.withColumn(self.output_col, to_date(col(self.input_col), self.date_format))
-
+        return df.withColumn(
+            self.output_col,
+            concat(
+                substring(col(self.input_col), 7, 4),  # ano
+                lit("-"),
+                substring(col(self.input_col), 1, 2),  # mês
+                lit("-"),
+                substring(col(self.input_col), 4, 2)   # dia
+            )
+        )
+    
 class LowerCaseTransformation(ColumnTransformation):
     def __init__(self, column: str):
         self.column = column

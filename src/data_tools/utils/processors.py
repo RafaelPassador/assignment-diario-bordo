@@ -46,6 +46,9 @@ class SilverProcessor(BaseProcessor):
     def process(self, source_table: str = "bronze_table", target_table: str = "silver_table") -> DataFrame:
         try:
             df = self.reader.read_delta(self.config.bronze_path, table_name=source_table)
+
+            #print a quantidade de linhas do dataframe
+            logging.info(f"Loaded {df.count()} rows from bronze table '{source_table}'")
             
             # Apply transformations
             transformations = [
@@ -64,6 +67,8 @@ class SilverProcessor(BaseProcessor):
             
             self.writer.write_delta(df, self.config.silver_path, target_table, partition_cols=["dt_refe"])
             logging.info("Silver transformation completed successfully")
+            #printar a quantidade de linhas do dataframe
+            logging.info(f"Transformed data saved to silver table '{target_table}' with {df.count()} rows")
             return df
             
         except Exception as e:
