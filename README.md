@@ -217,6 +217,26 @@ SILVER_PATH = "./data/silver/s_info_transportes"
 GOLD_PATH = "./data/gold/info_corridas_do_dia"
 ```
 
+### Exemplo de Arquivo .env
+
+Crie um arquivo `.env` na raiz do projeto com as seguintes configurações:
+
+```properties
+# Caminhos base
+BASE_PATH=./data
+INPUT_PATH=./data/input/info_transportes.csv
+
+# Nomes das tabelas
+BRONZE_TABLE=b_info_transportes
+SILVER_TABLE=s_info_transportes
+GOLD_TABLE=info_corridas_do_dia
+
+# Caminhos com nomes das tabelas
+BRONZE_PATH=./data/bronze/${BRONZE_TABLE}
+SILVER_PATH=./data/silver/${SILVER_TABLE}
+GOLD_PATH=./data/gold/${GOLD_TABLE}
+```
+
 ### Configuração do Spark
 
 O Spark é configurado em `main.py` com:
